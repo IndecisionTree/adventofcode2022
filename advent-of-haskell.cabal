@@ -1,0 +1,95 @@
+cabal-version: 3.0
+name:          advent-of-haskell
+version:       0.1.0.0
+synopsis:      Framework for AoC
+description:   Run, submit, test, and benchmark Advent of Code solutions.
+license:       BSD-3-Clause
+license-file:  LICENSE
+author:        IndecisionTree
+build-type:    Simple
+
+common common
+  default-language:   GHC2021
+  ghc-options:        -Wall
+  default-extensions: RecordWildCards
+
+executable runner
+  import:         common
+  main-is:        Main.hs
+  build-depends:
+    , aoc
+    , base                  ^>=4.16.3.0
+    , containers            ^>=0.6.5
+    , directory             ^>=1.3.6
+    , dotenv                ^>=0.9.0
+    , filepath              ^>=1.4.2
+    , megaparsec            ^>=9.3.0
+    , optparse-applicative  ^>=0.17.0
+    , solutions
+    , tasty                 ^>=1.4.2
+    , tasty-bench           ^>=0.3.2
+    , tasty-hunit           ^>=0.10.0
+    , text                  ^>=2.0
+
+  other-modules:  Tests
+  hs-source-dirs: runner
+
+library aoc
+  import:          common
+  exposed-modules: AOC
+  other-modules:
+    AOC.API
+    AOC.Types
+
+  build-depends:
+    , base             ^>=4.16.3.0
+    , bytestring       ^>=0.11.3
+    , http-api-data    ^>=0.5
+    , http-client      ^>=0.7.13
+    , http-client-tls  ^>=0.3.6
+    , http-media       ^>=0.8.0
+    , servant          ^>=0.19.1
+    , servant-client   ^>=0.19
+    , text             ^>=2.0
+    , time             ^>=1.11.1
+
+  hs-source-dirs:  aoc
+
+library solutions
+  import:          common
+
+  -- cabal-fmt: expand solutions
+  exposed-modules:
+    Days.Day01
+    Days.Day02
+    Days.Day03
+    Days.Day04
+    Days.Day05
+    Days.Day06
+    Days.Day07
+    Days.Day08
+    Days.Day09
+    Days.Day10
+    Days.Day11
+    Days.Day12
+    Days.Day13
+    Days.Day14
+    Days.Day15
+    Days.Day16
+    Days.Day17
+    Days.Day18
+    Days.Day19
+    Days.Day20
+    Days.Day21
+    Days.Day22
+    Days.Day23
+    Days.Day24
+    Solutions
+
+  build-depends:
+    , aoc
+    , base        ^>=4.16.3.0
+    , containers  ^>=0.6.5
+    , text        ^>=2.0
+
+  hs-source-dirs:  solutions
