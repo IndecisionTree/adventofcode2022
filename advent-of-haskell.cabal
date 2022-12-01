@@ -11,7 +11,7 @@ build-type:    Simple
 common common
   default-language:   GHC2021
   ghc-options:        -Wall
-  default-extensions: RecordWildCards
+  default-extensions: RecordWildCards, OverloadedStrings
 
 executable runner
   import:         common
