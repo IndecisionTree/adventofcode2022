@@ -1,12 +1,13 @@
 module Days.Day02 (day02) where
 
 import AOC (Solution (..))
-import Data.Bifunctor (second)
+import Control.Arrow ((>>>), (***), second)
 import Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 
 day02 :: Solution
 day02 = Solution parseInput part1 part2
+
 data RPS = Rock | Paper | Scissors
   deriving (Show, Eq, Enum, Bounded)
 
@@ -14,9 +15,8 @@ data Action = Lose | Draw | Win
   deriving (Show, Eq)
 
 parseInput :: T.Text -> [(RPS, T.Text)]
-parseInput = fmap pLine . T.lines
+parseInput = fmap (T.breakOn " " >>> translate table *** T.tail) . T.lines
   where
-    pLine l = let [a, b] = T.words l in (translate table a, b)
     table = [("A", Rock), ("B", Paper), ("C", Scissors)]
 
 part1 :: [(RPS, T.Text)] -> Int
