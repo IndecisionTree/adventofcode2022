@@ -33,8 +33,8 @@ part2 = sum
 
 priority :: Char -> Int
 priority ch
-  | isAsciiLower ch = fromEnum ch - 96
-  | isAsciiUpper ch = fromEnum ch - 38
+  | isAsciiLower ch = fromEnum ch - fromEnum 'a' + 1
+  | isAsciiUpper ch = fromEnum ch - fromEnum 'A' + 27
   | otherwise = error $ show ch
 
 mkCounter :: T.Text -> Counter
