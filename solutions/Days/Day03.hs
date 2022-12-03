@@ -4,6 +4,7 @@ import AOC (Solution (..))
 import Control.Monad (join)
 import Data.Bifunctor (bimap)
 import Data.Char (isAsciiUpper, isAsciiLower)
+import Data.List.Split (chunksOf)
 import Data.IntMap.Strict qualified as M
 import Data.Text qualified as T
 
@@ -35,14 +36,6 @@ priority ch
   | isAsciiLower ch = fromEnum ch - 96
   | isAsciiUpper ch = fromEnum ch - 38
   | otherwise = error $ show ch
-
-chunksOf :: Int -> [a] -> [[a]]
-chunksOf = go []
-  where
-    go a _ [] = a
-    go a n xs
-      | length xs >= n = go (take n xs : a) n (drop n xs)
-      | otherwise = reverse $ xs : a
 
 mkCounter :: T.Text -> Counter
 mkCounter =

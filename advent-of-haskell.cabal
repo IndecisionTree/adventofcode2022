@@ -90,6 +90,7 @@ library solutions
     , aoc
     , base        ^>=4.16.3.0
     , containers  ^>=0.6.5
+    , split       ^>=0.2.3
     , text        ^>=2.0
 
   hs-source-dirs:  solutions
