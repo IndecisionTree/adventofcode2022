@@ -23,10 +23,10 @@ parseInput = either (error . errorBundlePretty) id . parse pInput ""
 part1 :: [(Range, Range)] -> Int
 part1 = length . filter f 
   where
-    f ((a, b), (c, d)) = (a >= c && b <= d) || (c >= a && d <= b)
+    f ((s1, e1), (s2, e2)) = (s1 >= s2 && e1 <= e2) || (s2 >= s1 && e2 <= e1)
 
 part2 :: [(Range, Range)] -> Int
 part2 = length . filter f
   where
-    f ((a, b), (c, d)) = (c >= a && c <= b) || (a >= c && a <= d)
+    f ((s1, e1), (s2, e2)) = s1 <= e2 && s2 <= e1
 
