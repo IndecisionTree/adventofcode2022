@@ -2,15 +2,31 @@ module Days.Day04 (day04) where
 
 import AOC (Solution (..))
 import qualified Data.Text as T
+import Data.Void (Void)
+import Text.Megaparsec (Parsec, parse, errorBundlePretty, some)
+import Text.Megaparsec.Char (char, newline, numberChar)
 
 day04 :: Solution
 day04 = Solution parseInput part1 part2
 
-parseInput :: T.Text -> a
-parseInput = error "parseInput not defined for day 04"
+type Range = (Int, Int)
 
-part1 :: a -> Int
-part1 = error "part1 not defined for day 04"
+parseInput :: T.Text -> [(Range, Range)]
+parseInput = either (error . errorBundlePretty) id . parse pInput "" 
+  where
+    pInput :: Parsec Void T.Text [(Range, Range)]
+    pInput = some $ pLine <* newline
+    pLine = (,) <$> pRange <* char ',' <*> pRange
+    pRange = (,) <$> pNum <* char '-' <*> pNum
+    pNum = read <$> some numberChar
 
-part2 :: a -> Int
-part2 = error "part2 not defined for day 04"
+part1 :: [(Range, Range)] -> Int
+part1 = length . filter f 
+  where
+    f ((a, b), (c, d)) = (a >= c && b <= d) || (c >= a && d <= b)
+
+part2 :: [(Range, Range)] -> Int
+part2 = length . filter f
+  where
+    f ((a, b), (c, d)) = (c >= a && c <= b) || (a >= c && a <= d)
+
