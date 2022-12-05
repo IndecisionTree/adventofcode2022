@@ -66,7 +66,8 @@ pTests :: Parser [TestInput]
 pTests = many pTest <* eof
   where
     pTest = TestInput <$> pName <*> pInput <*> pExpected <?> "Test"
-    pName = T.pack <$> (symbol "-" *> lexeme (some (anySingleBut '\n'))) <?> "Test Name"
+    -- TODO handle leading space in test input more elegantly 
+    pName = T.pack <$> (symbol "-" *> some (anySingleBut '\n') <* newline) <?> "Test Name"
     pInput = T.pack <$> someTill anySingle (symbol "==") <?> "Input Lines"
     pExpected = T.pack <$> many (anySingleBut '\n') <* newline <?> "Expected Output"
 
