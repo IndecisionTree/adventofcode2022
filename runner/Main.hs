@@ -38,7 +38,7 @@ main = do
   when (_day < 1 || _day > 24) $ do
     fail $ printf "Day '%d' is out of range (1-24)" _day
 
-  (aocInput, aocSubmit) <- mkAocClient session year _day
+  (aocInput, _) <- mkAocClient session year _day
 
   input <- getPuzzleInput _day aocInput
   let day = solutions M.! _day
