@@ -2,7 +2,7 @@
 
 module Tests (test) where
 
-import AOC (Solution (..))
+import AOC (Solution (..), showSolution)
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
 import Data.Void (Void)
@@ -14,6 +14,7 @@ import Test.Tasty.Ingredients.Basic (consoleTestReporter)
 import Text.Megaparsec
 import Text.Megaparsec.Char (newline, space)
 import Text.Megaparsec.Char.Lexer qualified as L
+import Type.Reflection
 
 data TestInput = TestInput
   { _testName :: T.Text,
@@ -55,13 +56,15 @@ test (Solution pInput part1 part2) day part = do
 
 -- | Given an input parser, part1 or part2 function, and a test input,
 -- generate an HUnit test.
-mkTest :: Show b => (T.Text -> a) -> (a -> b) -> TestInput -> TestTree
+-- TODO this feels like a leaky abstraction of Solution
+mkTest :: (Typeable b, Show b) => (T.Text -> a) -> (a -> b) -> TestInput -> TestTree
 mkTest pInput part TestInput {..} =
   testCase (T.unpack _testName) $ T.unpack _testExpected @=? result
   where
-    result = show . part $ pInput _testInput
+    result = showSolution . part $ pInput _testInput
 
 -- | Parse test files into TestInput's
+-- TODO more robust parsing and better, user-friendly custom errors
 pTests :: Parser [TestInput]
 pTests = many pTest <* eof
   where
@@ -70,9 +73,6 @@ pTests = many pTest <* eof
     pName = T.pack <$> (symbol "-" *> some (anySingleBut '\n') <* newline) <?> "Test Name"
     pInput = T.pack <$> someTill anySingle (symbol "==") <?> "Input Lines"
     pExpected = T.pack <$> many (anySingleBut '\n') <* newline <?> "Expected Output"
-
-lexeme :: Parser a -> Parser a
-lexeme = L.lexeme space
 
 symbol :: T.Text -> Parser T.Text
 symbol = L.symbol space

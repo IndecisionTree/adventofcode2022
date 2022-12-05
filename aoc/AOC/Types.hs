@@ -7,9 +7,11 @@ module AOC.Types (
 import Data.Text (Text)
 import GHC.Generics (Generic)
 import Web.Internal.FormUrlEncoded (ToForm)
+import Type.Reflection
 
 data Solution where
-  Solution :: Show b => (Text -> a) -> (a -> b) -> (a -> b) -> Solution
+  Solution :: (Typeable b, Show b) =>
+    (Text -> a) -> (a -> b) -> (a -> b) -> Solution
 
 data Submission = Submission {
   part :: Int,

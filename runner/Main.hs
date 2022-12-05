@@ -1,6 +1,6 @@
 module Main where
 
-import AOC (Solution (..), mkAocClient)
+import AOC (Solution (..), mkAocClient, showSolution)
 import Configuration.Dotenv (defaultConfig, loadFile)
 import Control.Exception (IOException, catch)
 import Control.Monad (when)
@@ -71,8 +71,8 @@ run (Solution pInput part1 part2) part input =
     Just n -> printf "Part %d: %s\n" n $ if n == 1 then part1' else part2'
   where
     parsed = pInput input
-    part1' = show $ part1 parsed
-    part2' = show $ part2 parsed
+    part1' = showSolution $ part1 parsed
+    part2' = showSolution $ part2 parsed
 
 -- | CLI parser
 opts :: ParserInfo Options
