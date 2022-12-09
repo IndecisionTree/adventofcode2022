@@ -68,7 +68,7 @@ mkTest pInput part TestInput {..} =
 pTests :: Parser [TestInput]
 pTests = many pTest <* eof
   where
-    pTest = TestInput <$> pName <*> pInput <*> pExpected <?> "Test"
+    pTest = TestInput <$> pName <*> pInput <*> pExpected
     -- TODO handle leading space in test input more elegantly 
     pName = T.pack <$> (symbol "-" *> some (anySingleBut '\n') <* newline) <?> "Test Name"
     pInput = T.pack <$> someTill anySingle (symbol "==") <?> "Input Lines"
