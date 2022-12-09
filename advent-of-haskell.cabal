@@ -90,6 +90,7 @@ library solutions
 
   build-depends:
     , aoc
+    , array               ^>=0.5.4.0
     , base                ^>=4.16.3.0
     , containers          ^>=0.6.5
     , megaparsec          ^>=9.3.0
