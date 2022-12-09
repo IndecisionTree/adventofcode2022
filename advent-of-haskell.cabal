@@ -85,6 +85,8 @@ library solutions
     Days.Day23
     Days.Day24
     Solutions
+    Utils.Tree
+    Utils.Parser
 
   build-depends:
     , aoc
@@ -94,5 +96,6 @@ library solutions
     , parser-combinators  ^>=1.3.0
     , split               ^>=0.2.3
     , text                ^>=2.0
+    , transformers        ^>=0.5.6.2
 
   hs-source-dirs:  solutions
